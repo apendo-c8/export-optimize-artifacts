@@ -1,0 +1,27 @@
+name: "Export Camunda Optimize Artifacts"
+description: 'GitHub Action for automated export of Optimize artifacts'
+author: "Kristoffer Högberg"
+
+inputs:
+  collection_id:
+    description: 'The identifier of the collection that includes the artifacts intended for export'
+    required: true
+  base_address:
+    description: 'The base URL for your Camunda 8 cluster'
+    required: true
+  client_id:
+    description: 'The Camunda Optimize api client id'
+    required: true
+  client_secret:
+    description: 'The Camunda Optimize api client secret'
+    required: true
+  audience:
+    description: 'The Camunda Optimize audience'
+
+runs:
+  using: "node20"
+  main: "dist/index.js"
+
+branding:
+  icon: 'activity'
+  color: 'green'

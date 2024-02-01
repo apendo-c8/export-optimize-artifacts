@@ -1,5 +1,6 @@
+import {getInput, setFailed} from "@actions/core";
 import axios, {AxiosResponse} from 'axios';
-import * as fs from 'fs'; // Import the file system module
+import * as fs from 'fs';
 import path from "node:path";
 import dotenv from 'dotenv';
 import fsPromises from 'fs/promises';
@@ -10,13 +11,15 @@ dotenv.config();
 // TODO: Build for scenarios: only dashboards, only reports, dashboards & reports.
 // TODO: Account for all possible bad inputs.
 
-// let CONNECTION_TYPE = 'self-managed';
-// const BASE_ADDRESS = 'https://akstest.apendo.se/optimize'
-// const COLLECTION_ID = '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539';
+const AUDIENCE = getInput('audience');
 
-let CONNECTION_TYPE = 'cloud';
-const BASE_ADDRESS = 'https://bru-2.optimize.camunda.io/eac012f7-4678-43b7-bfef-77d78071ddce';
-const COLLECTION_ID = '73eac2ad-6f12-46f0-aac3-ab12e9ea1184';
+let CONNECTION_TYPE = 'self-managed';
+const BASE_ADDRESS = 'https://akstest.apendo.se/optimize'
+const COLLECTION_ID = '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539';
+
+// let CONNECTION_TYPE = 'cloud';
+// const BASE_ADDRESS = 'https://bru-2.optimize.camunda.io/eac012f7-4678-43b7-bfef-77d78071ddce';
+// const COLLECTION_ID = '73eac2ad-6f12-46f0-aac3-ab12e9ea1184';
 
 const getTokenCloud = async () => {
     try {
@@ -45,8 +48,9 @@ const getTokenCloud = async () => {
             return null;
         }
     } catch (error) {
-        // setFailed(error instanceof Error ? error.message : 'An error occurred');
-        // return null;
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
+        return null;
     }
 }
 
@@ -78,8 +82,9 @@ const getTokenSelfManaged = async () => {
             return null;
         }
     } catch (error) {
-        // setFailed(error instanceof Error ? error.message : 'An error occurred');
-        // return null;
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
+        return null;
     }
 }
 
@@ -100,7 +105,8 @@ const getTokenByConnectionType = async () => {
         }
 
     } catch (error) {
-        console.error('Error', error)
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
     }
 
 }
@@ -126,7 +132,8 @@ const getOptimizeDashboardIds = async () => {
         return response.data.map((report: { id: any; }) => report.id)
 
     } catch (error) {
-        console.error('Error:', error);
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
     }
 
 }
@@ -151,7 +158,8 @@ const getOptimizeReportIds = async () => {
         return response.data.map((report: { id: any; }) => report.id)
 
     } catch (error) {
-        console.error('Error:', error);
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
     }
 
 }
@@ -171,7 +179,8 @@ const exportDashboardDefinitions = async (reportIds: string[]) => {
         return response.data;
 
     } catch (error) {
-        console.error('Error:', error);
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
     }
 };
 
@@ -190,7 +199,9 @@ const exportReportDefinitions = async (reportIds: string[]) => {
         return response.data;
 
     } catch (error) {
-        console.error('Error:', error);
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
+
     }
 };
 
@@ -213,12 +224,12 @@ const writeOptimizeEntityToFile = async (optimizeEntityData: any, destinationFol
         console.log(`File content saved to: ${destinationFilePath}`);
 
     } catch (error) {
-        console.error('Error writing file:', error);
-        // setFailed(error instanceof Error ? error.message : 'An error occurred');
+
+        setFailed(error instanceof Error ? error.message : 'An error occurred');
     }
 };
 
-
+// TODO: How to run workflow?
 const runWorkflow = async () => {
     try {
 
