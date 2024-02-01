@@ -30,11 +30,10 @@ const AUTH_SERVER_URL = getInput('auth_server_url');
 
 const getTokenCloud = async () => {
     try {
-        // const url = 'https://login.cloud.camunda.io/oauth/token';
         const data = {
-            client_id: process.env.CLOUD_CLIENT_ID,
-            client_secret: process.env.CLOUD_CLIENT_SECRET,
-            audience: 'optimize.camunda.io',
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            audience: AUDIENCE,
             grant_type: 'client_credentials'
         };
 
@@ -64,11 +63,10 @@ const getTokenCloud = async () => {
 const getTokenSelfManaged = async () => {
 
     try {
-        // const url = `${BASE_ADDRESS}/auth/realms/camunda-platform/protocol/openid-connect/token`;
         const data = {
-            client_id: process.env.SM_CLIENT_ID,
-            client_secret: process.env.SM_CLIENT_SECRET,
-            audience: 'optimize-api',
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            audience: AUDIENCE,
             grant_type: 'client_credentials'
         };
 
@@ -121,7 +119,7 @@ const getTokenByConnectionType = async () => {
 
 const getOptimizeDashboardIds = async () => {
 
-    const url = `${BASE_ADDRESS}/api/public/dashboard?collectionId=${COLLECTION_ID}`;
+    const url = `${OPTIMIZE_API_URL}/api/public/dashboard?collectionId=${COLLECTION_ID}`;
     const token = await getTokenByConnectionType()
 
     if (!token) {
@@ -147,7 +145,7 @@ const getOptimizeDashboardIds = async () => {
 
 const getOptimizeReportIds = async () => {
 
-    const url = `${BASE_ADDRESS}/api/public/report?collectionId=${COLLECTION_ID}`;
+    const url = `${OPTIMIZE_API_URL}/api/public/report?collectionId=${COLLECTION_ID}`;
     const token = await getTokenByConnectionType()
 
     if (!token) {
@@ -173,7 +171,7 @@ const getOptimizeReportIds = async () => {
 
 const exportDashboardDefinitions = async (reportIds: string[]) => {
 
-    const url = `${BASE_ADDRESS}/api/public/export/dashboard/definition/json`
+    const url = `${OPTIMIZE_API_URL}/api/public/export/dashboard/definition/json`
     const token = await getTokenByConnectionType()
 
     const headers = {
@@ -193,7 +191,7 @@ const exportDashboardDefinitions = async (reportIds: string[]) => {
 
 const exportReportDefinitions = async (reportIds: string[]) => {
 
-    const url = `${BASE_ADDRESS}/api/public/export/report/definition/json`
+    const url = `${OPTIMIZE_API_URL}/api/public/export/report/definition/json`
     const token = await getTokenByConnectionType()
 
     const headers = {
@@ -237,6 +235,7 @@ const writeOptimizeEntityToFile = async (optimizeEntityData: any, destinationFol
 };
 
 // TODO: How to run workflow?
+// TODO: Get destination from input.
 const runWorkflow = async () => {
     try {
 
