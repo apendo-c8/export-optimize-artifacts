@@ -11,18 +11,18 @@ dotenv.config();
 // TODO: Build for scenarios: only dashboards, only reports, dashboards & reports.
 // TODO: Account for all possible bad inputs.
 
-// const OPTIMIZE_API_URL = getInput('optimize_api_url');
-// const COLLECTION_ID = getInput('collection_id');
-// const CONNECTION_TYPE = getInput('connection_type');
-// const CLIENT_ID = getInput('client_id')
-// const CLIENT_SECRET = getInput('client_secret')
-// const AUDIENCE = getInput('audience');
-//const AUTH_SERVER_URL = getInput('auth_server_url');
+const OPTIMIZE_API_URL = getInput('optimize_api_url');
+const COLLECTION_ID = getInput('collection_id');
+const CONNECTION_TYPE = getInput('connection_type');
+const CLIENT_ID = getInput('client_id')
+const CLIENT_SECRET = getInput('client_secret')
+const AUDIENCE = getInput('audience');
+const AUTH_SERVER_URL = getInput('auth_server_url');
 
-let CONNECTION_TYPE = 'self-managed';
-const BASE_ADDRESS = 'https://akstest.apendo.se/optimize'
-const COLLECTION_ID = '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539';
-const AUTH_SERVER_URL = 'https://akstest.apendo.se/auth/realms/camunda-platform/protocol/openid-connect/token'
+// let CONNECTION_TYPE = 'self-managed';
+// const BASE_ADDRESS = 'https://akstest.apendo.se/optimize'
+// const COLLECTION_ID = '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539';
+// const AUTH_SERVER_URL = 'https://akstest.apendo.se/auth/realms/camunda-platform/protocol/openid-connect/token'
 
 // let CONNECTION_TYPE = 'cloud';
 // const BASE_ADDRESS = 'https://bru-2.optimize.camunda.io/eac012f7-4678-43b7-bfef-77d78071ddce';
