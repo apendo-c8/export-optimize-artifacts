@@ -2,6 +2,8 @@ name: Test Optimize Actions Workflow
 
 on:
   workflow_dispatch:
+    branches:
+      - implement-action
 
 jobs:
   Test Optimize Actions:
