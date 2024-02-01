@@ -43,23 +43,30 @@ const promises_1 = __importDefault(__nccwpck_require__(3292));
 dotenv_1.default.config();
 // TODO: Build for scenarios: only dashboards, only reports, dashboards & reports.
 // TODO: Account for all possible bad inputs.
-const AUDIENCE = (0, core_1.getInput)('audience');
+// const OPTIMIZE_API_URL = getInput('optimize_api_url');
+// const COLLECTION_ID = getInput('collection_id');
+// const CONNECTION_TYPE = getInput('connection_type');
+// const CLIENT_ID = getInput('client_id')
+// const CLIENT_SECRET = getInput('client_secret')
+// const AUDIENCE = getInput('audience');
+//const AUTH_SERVER_URL = getInput('auth_server_url');
 let CONNECTION_TYPE = 'self-managed';
 const BASE_ADDRESS = 'https://akstest.apendo.se/optimize';
 const COLLECTION_ID = '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539';
+const AUTH_SERVER_URL = 'https://akstest.apendo.se/auth/realms/camunda-platform/protocol/openid-connect/token';
 // let CONNECTION_TYPE = 'cloud';
 // const BASE_ADDRESS = 'https://bru-2.optimize.camunda.io/eac012f7-4678-43b7-bfef-77d78071ddce';
 // const COLLECTION_ID = '73eac2ad-6f12-46f0-aac3-ab12e9ea1184';
 const getTokenCloud = async () => {
     try {
-        const url = 'https://login.cloud.camunda.io/oauth/token';
+        // const url = 'https://login.cloud.camunda.io/oauth/token';
         const data = {
-            grant_type: 'client_credentials',
+            client_id: process.env.CLOUD_CLIENT_ID,
+            client_secret: process.env.CLOUD_CLIENT_SECRET,
             audience: 'optimize.camunda.io',
-            client_id: process.env.CLOUD_CLIENT_ID, // Use environment variable
-            client_secret: process.env.CLOUD_CLIENT_SECRET //
+            grant_type: 'client_credentials'
         };
-        const response = await axios_1.default.post(url, data, {
+        const response = await axios_1.default.post(AUTH_SERVER_URL, data, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -81,14 +88,14 @@ const getTokenCloud = async () => {
 };
 const getTokenSelfManaged = async () => {
     try {
-        const url = 'https://akstest.apendo.se/auth/realms/camunda-platform/protocol/openid-connect/token';
+        // const url = `${BASE_ADDRESS}/auth/realms/camunda-platform/protocol/openid-connect/token`;
         const data = {
-            grant_type: 'client_credentials',
-            audience: 'optimize-api',
             client_id: process.env.SM_CLIENT_ID,
-            client_secret: process.env.SM_CLIENT_SECRET
+            client_secret: process.env.SM_CLIENT_SECRET,
+            audience: 'optimize-api',
+            grant_type: 'client_credentials'
         };
-        const response = await axios_1.default.post(url, data, {
+        const response = await axios_1.default.post(AUTH_SERVER_URL, data, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
