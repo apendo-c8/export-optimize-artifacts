@@ -1,0 +1,28 @@
+name: Test Optimize Actions Workflow
+
+on:
+  workflow_dispatch:
+    branches:
+      - implement-action
+
+jobs:
+  Test-Optimize-Actions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Test Optimize export
+        uses: ./
+        with:
+          optimize_api_url: 'https://akstest.apendo.se/optimize'
+          collection_id: '0c51a9c1-33ba-4a2e-a7a1-b2b148f4a539'
+          connection_type: 'self-managed'
+          client_id: 'optimize'
+          client_secret: 'A8rXEoyR6p'
+          audience: 'optimize-api'
+          auth_server_url: 'https://akstest.apendo.se/auth/realms/camunda-platform/protocol/openid-connect/token'
+
+      - name: List directories in project root
+        run: ls -d */
